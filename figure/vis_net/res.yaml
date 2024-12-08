@@ -1,0 +1,77 @@
+# parameters
+nc: 80  # number of classes
+depth_multiple: 1.0  # model depth multiple
+width_multiple: 1.0  # layer channel multiple
+#activation: nn.LeakyReLU(0.1)
+#activation: nn.ReLU()
+
+# anchors
+anchors: 3
+
+# elan backbone
+backbone:
+  # [from, repeats, module, args]
+  [
+   [-1, 1, Silence, []],  
+   
+   # conv down
+   [-1, 1, Conv, [64, 3, 2]],  # 1-P1/2
+
+   # conv down
+   [-1, 1, Conv, [128, 3, 2]],  # 2-P2/4
+
+   # elan-1 block
+   #-1, 1, Conv, [256, 1]],  # 2-P2/4
+   [-1, 1, Bottleneck, [256]],
+   [-1, 1, Bottleneck, [256]],
+   [-1, 1, Bottleneck, [256]],
+   [-1, 1, Bottleneck, [256]],
+   [-1, 1, Bottleneck, [256]],
+   [-1, 1, Bottleneck, [256]],
+   #-1, 1, Conv, [256, 1]],  # 2-P2/4
+
+   # avg-conv down
+   #[-1, 1, ADown, [256]],  # 4-P3/8
+
+   # elan-2 block
+   #-1, 1, Conv, [512, 1]],  # 2-P2/4
+   [-1, 1, Bottleneck, [512]],
+   [-1, 1, Bottleneck, [512]],
+   [-1, 1, Bottleneck, [512]],
+   [-1, 1, Bottleneck, [512]],
+   [-1, 1, Bottleneck, [512]],
+   [-1, 1, Bottleneck, [512]],
+   #-1, 1, Conv, [512, 1]],  # 2-P2/4
+
+   # avg-conv down
+   #[-1, 1, ADown, [512]],  # 6-P4/16
+
+   # elan-2 block
+   #-1, 1, Conv, [512, 1]],  # 2-P2/4
+   [-1, 1, Bottleneck, [512]],
+   [-1, 1, Bottleneck, [512]],
+   [-1, 1, Bottleneck, [512]],
+   [-1, 1, Bottleneck, [512]],
+   [-1, 1, Bottleneck, [512]],
+   [-1, 1, Bottleneck, [512]],
+   #-1, 1, Conv, [512, 1]],  # 2-P2/4
+
+   # avg-conv down
+   #[-1, 1, ADown, [512]],  # 8-P5/32
+
+   # elan-2 block
+   #-1, 1, Conv, [512, 1]],  # 2-P2/4
+   [-1, 1, Bottleneck, [512]],
+   [-1, 1, Bottleneck, [512]],
+   [-1, 1, Bottleneck, [512]],
+   [-1, 1, Bottleneck, [512]],
+   [-1, 1, Bottleneck, [512]],
+   [-1, 1, Bottleneck, [512]],
+   #-1, 1, Conv, [512, 1]],  # 2-P2/4
+  ]
+
+# elan head
+head:
+  [
+   
+  ]
