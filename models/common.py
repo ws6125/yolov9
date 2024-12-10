@@ -492,13 +492,14 @@ class SPPF(nn.Module):
 
 class DenseLayer(nn.Module):
     def __init__(self, c1):
+        super().__init__()
         self.dl = nn.Sequential(
             nn.BatchNorm2d(c1),
             nn.ReLU(inplace = True),
             nn.Conv2d(c1, 128, 1, 1),
             nn.BatchNorm2d(128),
             nn.ReLU(inplace = True),
-            nn.Conv2d(128, 32, 1, 1),
+            nn.Conv2d(128, 32, 1, 1, 1),
         )
 
     def forward(self, x):
@@ -506,6 +507,7 @@ class DenseLayer(nn.Module):
 
 class DenseBlock(nn.Module):
     def __init__(self, c1, nl):
+        super().__init__()
         input_c = [c1 + (32 * i) for i in range(nl)]
         self.db = nn.ModuleList(
             DenseLayer(c) for c in input_c
@@ -518,6 +520,7 @@ class DenseBlock(nn.Module):
 
 class DenseTransition(nn.Module):
     def __init__(self, c1):
+        super().__init__()
         self.dt = nn.Sequential(
             nn.BatchNorm2d(c1),
             nn.ReLU(inplace = True),
