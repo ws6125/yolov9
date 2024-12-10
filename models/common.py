@@ -507,12 +507,14 @@ class DenseLayer(nn.Module):
 class DenseBlock(nn.Module):
     def __init__(self, c1, nl):
         input_c = [c1 + (32 * i) for i in range(nl)]
-        self.db = nn.Sequential(
-            DenseLayer(input_c) for _ in input_c
+        self.db = nn.ModuleList(
+            DenseLayer(c) for c in input_c
         )
 
     def forward(self, x):
-        return self.db(x)
+        for i in range(len(self.db)):
+            x = self.db[i](x)
+        return x
 
 class DenseTransition(nn.Module):
     def __init__(self, c1):
