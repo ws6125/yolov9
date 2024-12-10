@@ -1,0 +1,48 @@
+# parameters
+nc: 80  # number of classes
+depth_multiple: 1.0  # model depth multiple
+width_multiple: 1.0  # layer channel multiple
+#activation: nn.LeakyReLU(0.1)
+#activation: nn.ReLU()
+
+# anchors
+anchors: 3
+
+# elan backbone
+backbone:
+  # [from, repeats, module, args]
+  [
+   [-1, 1, Silence, []],
+
+   # conv down
+   [-1, 1, DenseInit, []],  # 1
+
+   # dense block 1
+   [-1, 1, DenseBlock, [64, 6]],
+
+   # transition
+   [-1, 1, DenseTransition, [256]],
+
+   # dense block 2
+   [-1, 1, DenseBlock, [128, 12]],
+
+   # transition
+   [-1, 1, DenseTransition, [512]],
+
+   # dense block 3
+   [-1, 1, DenseBlock, [256, 8]],
+
+   # transition
+   [-1, 1, DenseTransition, [512]],
+
+   # dense block 4
+   [-1, 1, DenseBlock, [256, 6]],
+
+   [-1, 1, DenseLast, [448]],
+  ]
+
+# elan head
+head:
+  [
+
+  ]
