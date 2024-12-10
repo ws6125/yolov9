@@ -506,7 +506,7 @@ class DenseLayer(nn.Module):
 
 class DenseBlock(nn.Module):
     def __init__(self, c1, nl):
-        input_c = [c1 + (32 * i) for i in nl]
+        input_c = [c1 + (32 * i) for i in range(nl)]
         self.db = nn.Sequential(
             DenseLayer(input_c) for _ in input_c
         )
