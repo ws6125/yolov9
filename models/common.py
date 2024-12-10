@@ -518,6 +518,19 @@ class DenseBlock(nn.Module):
             x = self.db[i](x)
         return x
 
+class DenseInit(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.di = nn.Sequential(
+            nn.Conv2d(3, 64, 7, 2, 3),
+            nn.BatchNorm2d(64),
+            nn.ReLU(inplace = True),
+            SP(3, 2),
+        )
+
+    def forward(self, x):
+        return torch.cat((x, self.dl(x)), 1)
+
 class DenseTransition(nn.Module):
     def __init__(self, c1):
         super().__init__()
