@@ -413,7 +413,7 @@ class SPP(nn.Module):
             warnings.simplefilter('ignore')  # suppress torch 1.9.0 max_pool2d() warning
             return self.cv2(torch.cat([x] + [m(x) for m in self.m], 1))
 
-        
+
 class ASPP(torch.nn.Module):
 
     def __init__(self, in_channels, out_channels):
@@ -490,11 +490,46 @@ class SPPF(nn.Module):
             y2 = self.m(y1)
             return self.cv2(torch.cat((x, y1, y2, self.m(y2)), 1))
 
+class DenseLayer(nn.Module):
+    def __init__(self, c1):
+        self.dl = nn.Sequential(
+            nn.BatchNorm2d(c1),
+            nn.ReLU(inplace = True),
+            nn.Conv2d(c1, 128, 1, 1),
+            nn.BatchNorm2d(128),
+            nn.ReLU(inplace = True),
+            nn.Conv2d(128, 32, 1, 1),
+        )
+
+    def forward(self, x):
+        return torch.cat((x, self.dl(x)), 1)
+
+class DenseBlock(nn.Module):
+    def __init__(self, c1, nl):
+        input_c = [c1 + (32 * i) for i in nl]
+        self.db = nn.Sequential(
+            DenseLayer(input_c) for _ in input_c
+        )
+
+    def forward(self, x):
+        return self.db(x)
+
+class DenseTransition(nn.Module):
+    def __init__(self, c1):
+        self.dt = nn.Sequential(
+            nn.BatchNorm2d(c1),
+            nn.ReLU(inplace = True),
+            nn.Conv2d(c1, c1 // 2, 1, 1),
+            nn.AvgPool2d(2, 2, 0)
+        )
+
+    def forward(self, x):
+        return self.dt(x)
 
 import torch.nn.functional as F
 from torch.nn.modules.utils import _pair
-    
-    
+
+
 class ReOrg(nn.Module):
     # yolo
     def __init__(self):
@@ -549,17 +584,17 @@ class Shortcut(nn.Module):
 
     def forward(self, x):
         return x[0]+x[1]
-    
-    
+
+
 class Silence(nn.Module):
     def __init__(self):
         super(Silence, self).__init__()
-    def forward(self, x):    
+    def forward(self, x):
         return x
 
 
-##### GELAN #####        
-        
+##### GELAN #####
+
 class SPPELAN(nn.Module):
     # spp-elan
     def __init__(self, c1, c2, c3):  # ch_in, ch_out, number, shortcut, groups, expansion
@@ -575,8 +610,8 @@ class SPPELAN(nn.Module):
         y = [self.cv1(x)]
         y.extend(m(y[-1]) for m in [self.cv2, self.cv3, self.cv4])
         return self.cv5(torch.cat(y, 1))
-        
-        
+
+
 class ELAN1(nn.Module):
 
     def __init__(self, c1, c2, c3, c4):  # ch_in, ch_out, number, shortcut, groups, expansion
@@ -596,8 +631,8 @@ class ELAN1(nn.Module):
         y = list(self.cv1(x).split((self.c, self.c), 1))
         y.extend(m(y[-1]) for m in [self.cv2, self.cv3])
         return self.cv4(torch.cat(y, 1))
-        
-        
+
+
 class RepNCSPELAN4(nn.Module):
     # csp-elan
     def __init__(self, c1, c2, c3, c4, c5=1):  # ch_in, ch_out, number, shortcut, groups, expansion
@@ -628,7 +663,7 @@ class ImplicitA(nn.Module):
         super(ImplicitA, self).__init__()
         self.channel = channel
         self.implicit = nn.Parameter(torch.zeros(1, channel, 1, 1))
-        nn.init.normal_(self.implicit, std=.02)        
+        nn.init.normal_(self.implicit, std=.02)
 
     def forward(self, x):
         return self.implicit + x
@@ -639,7 +674,7 @@ class ImplicitM(nn.Module):
         super(ImplicitM, self).__init__()
         self.channel = channel
         self.implicit = nn.Parameter(torch.ones(1, channel, 1, 1))
-        nn.init.normal_(self.implicit, mean=1., std=.02)        
+        nn.init.normal_(self.implicit, mean=1., std=.02)
 
     def forward(self, x):
         return self.implicit * x
@@ -1208,7 +1243,7 @@ class Proto(nn.Module):
 class UConv(nn.Module):
     def __init__(self, c1, c_=256, c2=256):  # ch_in, number of protos, number of masks
         super().__init__()
-        
+
         self.cv1 = Conv(c1, c_, k=3)
         self.cv2 = nn.Conv2d(c_, c2, 1, 1)
         self.up = nn.Upsample(scale_factor=2, mode='bilinear', align_corners=True)
