@@ -529,7 +529,7 @@ class DenseInit(nn.Module):
         )
 
     def forward(self, x):
-        return torch.cat((x, self.dl(x)), 1)
+        return self.di(x)
 
 class DenseTransition(nn.Module):
     def __init__(self, c1):
