@@ -531,6 +531,14 @@ class DenseInit(nn.Module):
     def forward(self, x):
         return self.di(x)
 
+class DenseLast(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.bn = nn.BatchNorm2d(1024)
+
+    def forward(self, x):
+        return self.bn(x)
+
 class DenseTransition(nn.Module):
     def __init__(self, c1):
         super().__init__()
