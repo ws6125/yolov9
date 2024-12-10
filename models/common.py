@@ -500,7 +500,7 @@ class DenseLayer(nn.Module):
             nn.BatchNorm2d(128),
             nn.ReLU(inplace = True),
             # nn.Conv2d(128, 32, 1, 1, 1),
-            nn.Conv2d(128, 32, 1, 1, 1),
+            nn.Conv2d(128, 32, 1, 1),
         )
 
     def forward(self, x):
