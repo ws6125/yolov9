@@ -16,555 +16,555 @@ backbone:
 
    # conv down
    [-1, 1, nn.Conv2d, [3, 64, 7, 2, 3]],  # 1
-   [-1, 1, nn.BatchNorm2D, [64]],
+   [-1, 1, nn.BatchNorm2d, [64]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, SP, [3, 2, 1]],  # 4
 
    # dense block 1
-   [-1, 1, nn.BatchNorm2D, [64]],
+   [-1, 1, nn.BatchNorm2d, [64]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [64, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 10
 
    [[4, -1], 1, Concat, [1]],  # 11
 
-   [-1, 1, nn.BatchNorm2D, [96]],
+   [-1, 1, nn.BatchNorm2d, [96]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [96, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 17
 
    [[11, -1], 1, Concat, [1]],  # 18
 
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 24
 
    [[18, -1], 1, Concat, [1]],  # 25
 
-   [-1, 1, nn.BatchNorm2D, [160]],
+   [-1, 1, nn.BatchNorm2d, [160]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [160, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 31
 
    [[25, -1], 1, Concat, [1]],  # 32
 
-   [-1, 1, nn.BatchNorm2D, [192]],
+   [-1, 1, nn.BatchNorm2d, [192]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [192, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 38
 
    [[32, -1], 1, Concat, [1]],  # 39
 
-   [-1, 1, nn.BatchNorm2D, [224]],
+   [-1, 1, nn.BatchNorm2d, [224]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [224, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 45
 
    [[39, -1], 1, Concat, [1]],  # 46
 
    # transition
-   [-1, 1, nn.BatchNorm2D, [256]],
+   [-1, 1, nn.BatchNorm2d, [256]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [256, 128, 1, 1]],  # 49
    [-1, 1, nn.AvgPool2d, [2, 2, 0]],  # 50
 
    # dense block 2
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 56
 
    [[50, -1], 1, Concat, [1]],  # 57
 
-   [-1, 1, nn.BatchNorm2D, [160]],
+   [-1, 1, nn.BatchNorm2d, [160]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [160, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 63
 
    [[57, -1], 1, Concat, [1]],  # 64
 
-   [-1, 1, nn.BatchNorm2D, [192]],
+   [-1, 1, nn.BatchNorm2d, [192]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [192, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 70
 
    [[64, -1], 1, Concat, [1]],  # 71
 
-   [-1, 1, nn.BatchNorm2D, [224]],
+   [-1, 1, nn.BatchNorm2d, [224]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [224, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 77
 
    [[71, -1], 1, Concat, [1]],  # 78
 
-   [-1, 1, nn.BatchNorm2D, [256]],
+   [-1, 1, nn.BatchNorm2d, [256]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [256, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 84
 
    [[78, -1], 1, Concat, [1]],  # 85
 
-   [-1, 1, nn.BatchNorm2D, [288]],
+   [-1, 1, nn.BatchNorm2d, [288]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [288, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 91
 
    [[85, -1], 1, Concat, [1]],  # 92
 
-   [-1, 1, nn.BatchNorm2D, [320]],
+   [-1, 1, nn.BatchNorm2d, [320]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [320, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 98
 
    [[92, -1], 1, Concat, [1]],  # 99
 
-   [-1, 1, nn.BatchNorm2D, [352]],
+   [-1, 1, nn.BatchNorm2d, [352]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [352, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 105
 
    [[99, -1], 1, Concat, [1]],  # 106
 
-   [-1, 1, nn.BatchNorm2D, [384]],
+   [-1, 1, nn.BatchNorm2d, [384]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [384, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 112
 
    [[106, -1], 1, Concat, [1]],  # 113
 
-   [-1, 1, nn.BatchNorm2D, [416]],
+   [-1, 1, nn.BatchNorm2d, [416]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [416, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 119
 
    [[113, -1], 1, Concat, [1]],  # 120
 
-   [-1, 1, nn.BatchNorm2D, [448]],
+   [-1, 1, nn.BatchNorm2d, [448]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [448, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 126
 
    [[120, -1], 1, Concat, [1]],  # 127
 
-   [-1, 1, nn.BatchNorm2D, [480]],
+   [-1, 1, nn.BatchNorm2d, [480]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [480, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 133
 
    [[127, -1], 1, Concat, [1]],  # 134
 
    # transition
-   [-1, 1, nn.BatchNorm2D, [512]],
+   [-1, 1, nn.BatchNorm2d, [512]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [512, 256, 1, 1]],  # 137
    [-1, 1, nn.AvgPool2d, [2, 2, 0]],  # 138
 
    # dense block 3
-   [-1, 1, nn.BatchNorm2D, [256]],
+   [-1, 1, nn.BatchNorm2d, [256]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [256, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 144
 
    [[138, -1], 1, Concat, [1]],  # 145
 
-   [-1, 1, nn.BatchNorm2D, [288]],
+   [-1, 1, nn.BatchNorm2d, [288]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [288, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 151
 
    [[145, -1], 1, Concat, [1]],  # 152
 
-   [-1, 1, nn.BatchNorm2D, [320]],
+   [-1, 1, nn.BatchNorm2d, [320]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [320, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 158
 
    [[152, -1], 1, Concat, [1]],  # 159
 
-   [-1, 1, nn.BatchNorm2D, [352]],
+   [-1, 1, nn.BatchNorm2d, [352]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [352, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 165
 
    [[159, -1], 1, Concat, [1]],  # 166
 
-   [-1, 1, nn.BatchNorm2D, [384]],
+   [-1, 1, nn.BatchNorm2d, [384]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [384, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 172
 
    [[166, -1], 1, Concat, [1]],  # 173
 
-   [-1, 1, nn.BatchNorm2D, [416]],
+   [-1, 1, nn.BatchNorm2d, [416]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [416, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 179
 
    [[173, -1], 1, Concat, [1]],  # 180
 
-   [-1, 1, nn.BatchNorm2D, [448]],
+   [-1, 1, nn.BatchNorm2d, [448]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [448, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 186
 
    [[180, -1], 1, Concat, [1]],  # 187
 
-   [-1, 1, nn.BatchNorm2D, [480]],
+   [-1, 1, nn.BatchNorm2d, [480]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [480, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 193
 
    [[187, -1], 1, Concat, [1]],  # 194
 
-   [-1, 1, nn.BatchNorm2D, [512]],
+   [-1, 1, nn.BatchNorm2d, [512]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [512, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 200
 
    [[194, -1], 1, Concat, [1]],  # 201
 
-   [-1, 1, nn.BatchNorm2D, [544]],
+   [-1, 1, nn.BatchNorm2d, [544]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [544, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 207
 
    [[201, -1], 1, Concat, [1]],  # 208
 
-   [-1, 1, nn.BatchNorm2D, [576]],
+   [-1, 1, nn.BatchNorm2d, [576]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [576, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 214
 
    [[208, -1], 1, Concat, [1]],  # 215
 
-   [-1, 1, nn.BatchNorm2D, [608]],
+   [-1, 1, nn.BatchNorm2d, [608]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [608, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 221
 
    [[215, -1], 1, Concat, [1]],  # 222
 
-   [-1, 1, nn.BatchNorm2D, [640]],
+   [-1, 1, nn.BatchNorm2d, [640]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [640, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 228
 
    [[222, -1], 1, Concat, [1]],  # 229
 
-   [-1, 1, nn.BatchNorm2D, [672]],
+   [-1, 1, nn.BatchNorm2d, [672]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [672, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 235
 
    [[229, -1], 1, Concat, [1]],  # 236
 
-   [-1, 1, nn.BatchNorm2D, [704]],
+   [-1, 1, nn.BatchNorm2d, [704]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [704, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 242
 
    [[236, -1], 1, Concat, [1]],  # 243
 
-   [-1, 1, nn.BatchNorm2D, [736]],
+   [-1, 1, nn.BatchNorm2d, [736]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [736, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 249
 
    [[243, -1], 1, Concat, [1]],  # 250
 
-   [-1, 1, nn.BatchNorm2D, [768]],
+   [-1, 1, nn.BatchNorm2d, [768]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [768, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 256
 
    [[250, -1], 1, Concat, [1]],  # 257
 
-   [-1, 1, nn.BatchNorm2D, [800]],
+   [-1, 1, nn.BatchNorm2d, [800]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [800, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 263
 
    [[257, -1], 1, Concat, [1]],  # 264
 
-   [-1, 1, nn.BatchNorm2D, [832]],
+   [-1, 1, nn.BatchNorm2d, [832]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [832, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 270
 
    [[264, -1], 1, Concat, [1]],  # 271
 
-   [-1, 1, nn.BatchNorm2D, [864]],
+   [-1, 1, nn.BatchNorm2d, [864]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [864, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 277
 
    [[271, -1], 1, Concat, [1]],  # 278
 
-   [-1, 1, nn.BatchNorm2D, [896]],
+   [-1, 1, nn.BatchNorm2d, [896]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [896, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 284
 
    [[278, -1], 1, Concat, [1]],  # 285
 
-   [-1, 1, nn.BatchNorm2D, [928]],
+   [-1, 1, nn.BatchNorm2d, [928]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [928, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 291
 
    [[285, -1], 1, Concat, [1]],  # 292
 
-   [-1, 1, nn.BatchNorm2D, [960]],
+   [-1, 1, nn.BatchNorm2d, [960]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [960, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 298
 
    [[292, -1], 1, Concat, [1]],  # 299
 
-   [-1, 1, nn.BatchNorm2D, [992]],
+   [-1, 1, nn.BatchNorm2d, [992]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [992, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 305
 
    [[299, -1], 1, Concat, [1]],  # 306
 
    # transition
-   [-1, 1, nn.BatchNorm2D, [1024]],
+   [-1, 1, nn.BatchNorm2d, [1024]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [1024, 512, 1, 1]],  # 309
    [-1, 1, nn.AvgPool2d, [2, 2, 0]],  # 310
 
    # dense block 4
-   [-1, 1, nn.BatchNorm2D, [512]],
+   [-1, 1, nn.BatchNorm2d, [512]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [512, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 316
 
    [[310, -1], 1, Concat, [1]],  # 317
 
-   [-1, 1, nn.BatchNorm2D, [544]],
+   [-1, 1, nn.BatchNorm2d, [544]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [544, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 323
 
    [[317, -1], 1, Concat, [1]],  # 324
 
-   [-1, 1, nn.BatchNorm2D, [576]],
+   [-1, 1, nn.BatchNorm2d, [576]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [576, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 330
 
    [[324, -1], 1, Concat, [1]],  # 331
 
-   [-1, 1, nn.BatchNorm2D, [608]],
+   [-1, 1, nn.BatchNorm2d, [608]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [608, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 337
 
    [[331, -1], 1, Concat, [1]],  # 338
 
-   [-1, 1, nn.BatchNorm2D, [640]],
+   [-1, 1, nn.BatchNorm2d, [640]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [640, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 344
 
    [[338, -1], 1, Concat, [1]],  # 345
 
-   [-1, 1, nn.BatchNorm2D, [672]],
+   [-1, 1, nn.BatchNorm2d, [672]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [672, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 351
 
    [[345, -1], 1, Concat, [1]],  # 352
 
-   [-1, 1, nn.BatchNorm2D, [704]],
+   [-1, 1, nn.BatchNorm2d, [704]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [704, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 358
 
    [[352, -1], 1, Concat, [1]],  # 359
 
-   [-1, 1, nn.BatchNorm2D, [736]],
+   [-1, 1, nn.BatchNorm2d, [736]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [736, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 365
 
    [[359, -1], 1, Concat, [1]],  # 366
 
-   [-1, 1, nn.BatchNorm2D, [768]],
+   [-1, 1, nn.BatchNorm2d, [768]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [768, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 372
 
    [[366, -1], 1, Concat, [1]],  # 373
 
-   [-1, 1, nn.BatchNorm2D, [800]],
+   [-1, 1, nn.BatchNorm2d, [800]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [800, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 379
 
    [[373, -1], 1, Concat, [1]],  # 380
 
-   [-1, 1, nn.BatchNorm2D, [832]],
+   [-1, 1, nn.BatchNorm2d, [832]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [832, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 386
 
    [[380, -1], 1, Concat, [1]],  # 387
 
-   [-1, 1, nn.BatchNorm2D, [864]],
+   [-1, 1, nn.BatchNorm2d, [864]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [864, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 393
 
    [[387, -1], 1, Concat, [1]],  # 394
 
-   [-1, 1, nn.BatchNorm2D, [896]],
+   [-1, 1, nn.BatchNorm2d, [896]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [896, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 400
 
    [[394, -1], 1, Concat, [1]],  # 401
 
-   [-1, 1, nn.BatchNorm2D, [928]],
+   [-1, 1, nn.BatchNorm2d, [928]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [928, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 407
 
    [[401, -1], 1, Concat, [1]],  # 408
 
-   [-1, 1, nn.BatchNorm2D, [960]],
+   [-1, 1, nn.BatchNorm2d, [960]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [960, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 414
 
    [[408, -1], 1, Concat, [1]],  # 415
 
-   [-1, 1, nn.BatchNorm2D, [992]],
+   [-1, 1, nn.BatchNorm2d, [992]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [992, 128, 1, 1]],
-   [-1, 1, nn.BatchNorm2D, [128]],
+   [-1, 1, nn.BatchNorm2d, [128]],
    [-1, 1, nn.ReLU, []],
    [-1, 1, nn.Conv2d, [128, 32, 3, 1, 1]],  # 421
 
    [[415, -1], 1, Concat, [1]],  # 422
 
-   [-1, 1, nn.BatchNorm2D, [1024]],  # 423
+   [-1, 1, nn.BatchNorm2d, [1024]],  # 423
   ]
 
 # elan head
