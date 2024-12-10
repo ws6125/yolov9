@@ -499,6 +499,7 @@ class DenseLayer(nn.Module):
             nn.Conv2d(c1, 128, 1, 1),
             nn.BatchNorm2d(128),
             nn.ReLU(inplace = True),
+            # nn.Conv2d(128, 32, 1, 1, 1),
             nn.Conv2d(128, 32, 1, 1, 1),
         )
 
@@ -546,7 +547,7 @@ class DenseTransition(nn.Module):
             nn.BatchNorm2d(c1),
             nn.ReLU(inplace = True),
             nn.Conv2d(c1, c1 // 2, 1, 1),
-            nn.AvgPool2d(2, 2, 0)
+            # nn.AvgPool2d(2, 2, 0)
         )
 
     def forward(self, x):
