@@ -598,7 +598,7 @@ class MobileIR(nn.Module):
             ])
         else:
             self.mir = nn.ModuleList([
-                MobileConv(c1, cm, k, s, 0) if (0 == c) else MobileConv(cm, cm, k, s, p, g = cm) for c in range(nc)
+                MobileConv(c1, cm, 1, 1, 0) if (0 == c) else MobileConv(cm, cm, k, s, p, g = cm) for c in range(nc)
             ])
 
         self.conv = nn.Conv2d(cm, c2, 1, 1, 0)
