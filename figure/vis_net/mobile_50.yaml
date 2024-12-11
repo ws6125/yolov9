@@ -1,0 +1,46 @@
+# parameters
+nc: 80  # number of classes
+depth_multiple: 1.0  # model depth multiple
+width_multiple: 1.0  # layer channel multiple
+#activation: nn.LeakyReLU(0.1)
+#activation: nn.ReLU()
+
+# anchors
+anchors: 3
+
+# elan backbone
+backbone:
+  # [from, repeats, module, args]
+  [
+   [-1, 1, Silence, []],
+
+   # conv down
+   [-1, 1, MobileInit, []],  # 1
+
+   # bottleneck
+   [-1, 1, MobileIR, [32, 16, 3, 1, 1, 32, 1]],
+   [-1, 1, MobileIR, [16, 24, 3, 1, 1, 96, 2]],
+   [-1, 1, MobileIR, [24, 24, 3, 1, 1, 144, 2]],
+   [-1, 1, MobileIR, [24, 32, 3, 1, 1, 144, 2]],
+   [-1, 1, MobileIR, [32, 32, 3, 1, 1, 192, 2]],
+   [-1, 1, MobileIR, [32, 32, 3, 1, 1, 192, 2]],
+   [-1, 1, MobileIR, [32, 64, 3, 1, 1, 192, 2]],
+   [-1, 1, MobileIR, [64, 64, 3, 1, 1, 384, 2]],
+   [-1, 1, MobileIR, [64, 64, 3, 1, 1, 384, 2]],
+   [-1, 1, MobileIR, [64, 64, 3, 1, 1, 384, 2]],
+   [-1, 1, MobileIR, [64, 96, 3, 1, 1, 384, 2]],
+   [-1, 1, MobileIR, [96, 96, 3, 1, 1, 576, 2]],
+   [-1, 1, MobileIR, [96, 96, 3, 1, 1, 576, 2]],
+   [-1, 1, MobileIR, [96, 160, 3, 1, 1, 576, 2]],
+   [-1, 1, MobileIR, [160, 160, 3, 1, 1, 960, 2]],
+   [-1, 1, MobileIR, [160, 160, 3, 1, 1, 960, 2]],
+   [-1, 1, MobileIR, [160, 320, 3, 1, 1, 960, 2]],
+
+   [-1, 1, MobileConv, [320, 1280, 3, 1, 0, 960, 2]],
+  ]
+
+# elan head
+head:
+  [
+
+  ]

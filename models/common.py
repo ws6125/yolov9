@@ -490,6 +490,9 @@ class SPPF(nn.Module):
             y2 = self.m(y1)
             return self.cv2(torch.cat((x, y1, y2, self.m(y2)), 1))
 
+
+##### Dense #####
+
 class DenseLayer(nn.Module):
     def __init__(self, c1):
         super().__init__()
@@ -506,6 +509,7 @@ class DenseLayer(nn.Module):
     def forward(self, x):
         return torch.cat((x, self.dl(x)), 1)
 
+
 class DenseBlock(nn.Module):
     def __init__(self, c1, nl):
         super().__init__()
@@ -518,6 +522,7 @@ class DenseBlock(nn.Module):
         for i in range(len(self.db)):
             x = self.db[i](x)
         return x
+
 
 class DenseInit(nn.Module):
     def __init__(self):
@@ -532,6 +537,7 @@ class DenseInit(nn.Module):
     def forward(self, x):
         return self.di(x)
 
+
 class DenseLast(nn.Module):
     def __init__(self, c1):
         super().__init__()
@@ -539,6 +545,7 @@ class DenseLast(nn.Module):
 
     def forward(self, x):
         return self.bn(x)
+
 
 class DenseTransition(nn.Module):
     def __init__(self, c1):
@@ -552,6 +559,58 @@ class DenseTransition(nn.Module):
 
     def forward(self, x):
         return self.dt(x)
+
+##### Dense #####
+
+
+##### Mobile #####
+
+
+class MobileConv(nn.Module):
+    def __init__(self, c1, c2, k = 3, s = 1, p = 1, g = 1):
+        super().__init__()
+        self.conv = nn.Sequential(
+            nn.Conv2d(c1, c2, k, s, p, groups = g),
+            nn.BatchNorm2d(c2),
+            nn.ReLU6(inplace = True),
+        )
+
+    def forward(self, x):
+        return self.conv(x)
+
+
+class MobileInit(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.mi = MobileConv(3, 32, 3, 2, 1)
+
+    def forward(self, x):
+        return self.mi(x)
+
+
+class MobileIR(nn.Module):
+    def __init__(self, c1, c2, k = 3, s = 1, p = 1, cm = 32, nc = 1):
+        super().__init__()
+
+        if 1 == nc:
+            self.mir = nn.ModuleList(
+                MobileConv(c1, cm, k, s, p, g = cm)
+            )
+        else:
+            self.mir = nn.ModuleList(
+                MobileConv(c1, cm, k, s, 0) if (0 == c) else MobileConv(cm, cm, k, s, p, g = cm) for c in range(nc)
+            )
+
+        self.conv = nn.Conv2d(cm, c2, 1, 1, 0),
+        self.bn = nn.BatchNorm2d(c2),
+
+    def forward(self, x):
+        for i in range(len(self.mir)):
+            x = self.mir[i](x)
+        return self.bn(self.conv(x))
+
+
+##### Mobile #####
 
 import torch.nn.functional as F
 from torch.nn.modules.utils import _pair
