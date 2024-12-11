@@ -581,10 +581,26 @@ class MobileConv(nn.Module):
 class MobileInit(nn.Module):
     def __init__(self):
         super().__init__()
-        self.mi = MobileConv(3, 32, 3, 2, 1)
+        self.mi = nn.Sequential(
+            nn.Conv2d(3, 32, 3, 2, 1),
+            nn.ReLU(inplace = True)
+        )
 
     def forward(self, x):
         return self.mi(x)
+
+
+class MobileEnd(nn.Module):
+    def __init__(self, c1, c2):
+        super().__init__()
+        self.me = nn.Sequential(
+            nn.Conv2d(c1, c2, 3, 1, 0),
+            nn.BatchNorm2d(c2),
+            nn.ReLU6(inplace = True)
+        )
+
+    def forward(self, x):
+        return self.me(x)
 
 
 class MobileIR(nn.Module):
@@ -621,6 +637,7 @@ class MobileIR(nn.Module):
 
     def forward(self, x):
         return x + self.mir(x) if self.short else self.mir(x)
+
 
 class MobileBlock(nn.Module):
     def __init__(self, c1, c2, t, n, s):
