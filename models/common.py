@@ -593,9 +593,9 @@ class MobileIR(nn.Module):
         super().__init__()
 
         if 1 == nc:
-            self.mir = nn.ModuleList(
+            self.mir = [
                 MobileConv(c1, cm, k, s, p, g = cm)
-            )
+            ]
         else:
             self.mir = nn.ModuleList(
                 MobileConv(c1, cm, k, s, 0) if (0 == c) else MobileConv(cm, cm, k, s, p, g = cm) for c in range(nc)
