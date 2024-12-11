@@ -514,9 +514,9 @@ class DenseBlock(nn.Module):
     def __init__(self, c1, nl):
         super().__init__()
         input_c = [c1 + (32 * i) for i in range(nl)]
-        self.db = nn.ModuleList(
+        self.db = nn.ModuleList([
             DenseLayer(c) for c in input_c
-        )
+        ])
 
     def forward(self, x):
         for i in range(len(self.db)):
@@ -593,13 +593,13 @@ class MobileIR(nn.Module):
         super().__init__()
 
         if 1 == nc:
-            self.mir = [
+            self.mir = nn.ModuleList([
                 MobileConv(c1, cm, k, s, p, g = cm)
-            ]
+            ])
         else:
-            self.mir = nn.ModuleList(
+            self.mir = nn.ModuleList([
                 MobileConv(c1, cm, k, s, 0) if (0 == c) else MobileConv(cm, cm, k, s, p, g = cm) for c in range(nc)
-            )
+            ])
 
         self.conv = nn.Conv2d(cm, c2, 1, 1, 0),
         self.bn = nn.BatchNorm2d(c2),
