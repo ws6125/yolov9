@@ -565,14 +565,13 @@ class DenseTransition(nn.Module):
 
 ##### Mobile #####
 
-
 class MobileConv(nn.Module):
     def __init__(self, c1, c2, k = 3, s = 1, p = 1, g = 1):
         super().__init__()
         self.conv = nn.Sequential(
             nn.Conv2d(c1, c2, k, s, p, groups = g),
             nn.BatchNorm2d(c2),
-            nn.ReLU6(inplace = True),
+            nn.ReLU(inplace = True),
         )
 
     def forward(self, x):
@@ -589,26 +588,52 @@ class MobileInit(nn.Module):
 
 
 class MobileIR(nn.Module):
-    def __init__(self, c1, c2, k = 3, s = 1, p = 1, cm = 32, nc = 1):
+    def __init__(self, c1, c2, s, er):
         super().__init__()
 
-        if 1 == nc:
-            self.mir = nn.ModuleList([
-                MobileConv(c1, cm, k, s, p, g = cm)
-            ])
-        else:
-            self.mir = nn.ModuleList([
-                MobileConv(c1, cm, 1, 1, 0) if (0 == c) else MobileConv(cm, cm, k, s, p, g = cm) for c in range(nc)
-            ])
+        hidden_dim = c1 * er
+        self.short = (1 == s) and (c1 == c2)
 
-        self.conv = nn.Conv2d(cm, c2, 1, 1, 0)
-        self.bn = nn.BatchNorm2d(c2)
+        if 1 == er:
+            self.mir = nn.Sequential(
+                # nn.Conv2d(hidden_dim, hidden_dim, 3, s, 1, groups = hidden_dim),
+                nn.Conv2d(hidden_dim, hidden_dim, 3, 1, 1, groups = hidden_dim),
+                nn.BatchNorm2d(hidden_dim),
+                nn.ReLU(inplace = True),
+
+                nn.Conv2d(hidden_dim, c2, 1, 1, 0),
+                nn.BatchNorm2d(c2),
+            )
+        else:
+            self.mir = nn.Sequential(
+                nn.Conv2d(c1, hidden_dim, 1, 1, 0),
+                nn.BatchNorm2d(hidden_dim),
+                nn.ReLU(inplace = True),
+
+                # nn.Conv2d(hidden_dim, hidden_dim, 3, s, 1, groups = hidden_dim),
+                nn.Conv2d(hidden_dim, hidden_dim, 3, 1, 1, groups = hidden_dim),
+                nn.BatchNorm2d(hidden_dim),
+                nn.ReLU(inplace = True),
+
+                nn.Conv2d(hidden_dim, c2, 1, 1, 0),
+                nn.BatchNorm2d(c2),
+            )
 
     def forward(self, x):
-        for i in range(len(self.mir)):
-            x = self.mir[i](x)
-        return self.bn(self.conv(x))
+        return x + self.mir(x) if self.short else self.mir(x)
 
+class MobileBlock(nn.Module):
+    def __init__(self, c1, c2, t, n, s):
+        super().__init__()
+
+        layers = []
+        for i in range(n):
+            layers.append(MobileIR(c1, c2, s if (0 == i) else 1, t))
+            c1 = c2
+        self.block = nn.Sequential(*layers)
+
+    def forward(self, x):
+        return self.block(x)
 
 ##### Mobile #####
 
