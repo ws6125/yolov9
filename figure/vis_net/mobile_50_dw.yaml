@@ -18,13 +18,13 @@ backbone:
    [-1, 1, MobileInit, []],  # 1
 
    # bottleneck
-   [-1, 1, MobileBlock, [32, 16, 1, 1, 1, False]],
-   [-1, 1, MobileBlock, [16, 24, 6, 2, 2, False]],
-   [-1, 1, MobileBlock, [24, 32, 6, 3, 2, False]],
-   [-1, 1, MobileBlock, [32, 64, 6, 4, 2, False]],
-   [-1, 1, MobileBlock, [64, 96, 6, 3, 1, False]],
-   [-1, 1, MobileBlock, [96, 160, 6, 3, 2, False]],
-   [-1, 1, MobileBlock, [160, 320, 6, 1, 1, False]],
+   [-1, 1, MobileBlock, [32, 16, 1, 1, 1, True]],
+   [-1, 1, MobileBlock, [16, 24, 6, 2, 2, True]],
+   [-1, 1, MobileBlock, [24, 32, 6, 3, 2, True]],
+   [-1, 1, MobileBlock, [32, 64, 6, 4, 2, True]],
+   [-1, 1, MobileBlock, [64, 96, 6, 3, 1, True]],
+   [-1, 1, MobileBlock, [96, 160, 6, 3, 2, True]],
+   [-1, 1, MobileBlock, [160, 320, 6, 1, 1, True]],
 
    [-1, 1, MobileEnd, [320, 1280]],
   ]
