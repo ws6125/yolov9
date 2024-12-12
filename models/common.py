@@ -654,6 +654,109 @@ class MobileBlock(nn.Module):
 
 ##### Mobile #####
 
+
+##### Shuffle #####
+
+class ShuffleInit(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.si = nn.Sequential(
+            nn.Conv2d(3, 24, 3, 2, 1),
+            nn.MaxPool2d(kernel_size = 3, stride = 2, padding = 1)
+        )
+
+    def forward(self, x):
+        return self.si(x)
+
+class ShuffleEnd(nn.Module):
+    def __init__(self, c1, c2, s):
+        super().__init__()
+        self.se = nn.Sequential(
+            nn.Conv2d(c1, c2, 1, s, 0),
+            nn.BatchNorm2d(c2),
+            nn.ReLU(inplace = True)
+        )
+
+    def forward(self, x):
+        return self.se(x)
+
+class ShuffleStage(nn.Module):
+    def __init__(self, c1, c2, down = False):
+        super().__init__()
+        self.down = down
+        cm = c2 // 2
+
+        if down:
+            self.b1 = nn.Sequential(
+                nn.Conv2d(c1, c1, 3, 2, 1, groups = c1),
+                nn.BatchNorm2d(c1),
+
+                nn.Conv2d(c1, cm, 1, 1, 0),
+                nn.BatchNorm2d(cm),
+                nn.ReLU(inplace = True),
+            )
+
+            self.b2 = nn.Sequential(
+                nn.Conv2d(c1, cm, 1, 1, 0),
+                nn.BatchNorm2d(cm),
+                nn.ReLU(inplace = True),
+
+                nn.Conv2d(cm, cm, 3, 2, 1, groups = cm),
+                nn.BatchNorm2d(cm),
+
+                nn.Conv2d(cm, cm, 1, 1, 0),
+                nn.BatchNorm2d(cm),
+                nn.ReLU(inplace = True)
+            )
+        else:
+            self.b2 = nn.Sequential(
+                nn.Conv2d(cm, cm, 1, 1, 0),
+                nn.BatchNorm2d(cm),
+                nn.ReLU(inplace = True),
+
+                nn.Conv2d(cm, cm, 3, 1, 1, groups = cm),
+                nn.BatchNorm2d(cm),
+
+                nn.Conv2d(cm, cm, 1, 1, 0),
+                nn.BatchNorm2d(cm),
+                nn.ReLU(inplace = True)
+            )
+
+    def forward(self, x):
+        out = None
+        if self.down:
+            out = torch.cat((self.b1(x), self.b2(x)), 1)
+        else:
+            ch = x.shape[1] // 2
+            x1 = x[:, : ch, :, :]
+            x2 = x[:, ch :, :, :]
+            out = torch.cat((x1, self.b2(x2)), 1)
+
+        b, c, w, h = out.shape
+        gc = c // 2
+        out = out.view(b, 2, gc, w, h)
+        out = torch.transpose(out, 1, 2).contiguous()
+        out = out.view(b, -1, w, h)
+        return out
+
+class ShuffleBlock(nn.Module):
+    def __init__(self, c1, c2, rn):
+        super().__init__()
+        self.stages = []
+        for i in range(rn):
+            if 0 == i:
+                self.stages.append(ShuffleStage(c1, c2, True))
+            else:
+                self.stages.append(ShuffleStage(c1, c1, False))
+            c1 = c2
+        self.stages = nn.Sequential(*self.stages)
+
+    def forward(self, x):
+        return self.stages(x)
+
+##### Shuffle #####
+
+
 import torch.nn.functional as F
 from torch.nn.modules.utils import _pair
 
