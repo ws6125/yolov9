@@ -691,7 +691,8 @@ class ShuffleStage(nn.Module):
         if down:
             self.b1 = nn.Sequential(
                 # nn.Conv2d(c1, c1, 3, 2, 1, groups = c1, bias = False),
-                nn.Conv2d(c1, c1, 3, 1, 1, groups = 1, bias = False),
+                nn.Conv2d(c1, c1, 3, 1, 1, groups = c1, bias = False),
+                # nn.Conv2d(c1, c1, 3, 1, 1, groups = 1, bias = False),
                 nn.BatchNorm2d(c1),
 
                 nn.Conv2d(c1, cm, 1, 1, 0, bias = False),
@@ -705,7 +706,8 @@ class ShuffleStage(nn.Module):
                 nn.ReLU(inplace = True),
 
                 # nn.Conv2d(cm, cm, 3, 2, 1, groups = cm, bias = False),
-                nn.Conv2d(cm, cm, 3, 1, 1, groups = 1, bias = False),
+                nn.Conv2d(cm, cm, 3, 1, 1, groups = cm, bias = False),
+                # nn.Conv2d(cm, cm, 3, 1, 1, groups = 1, bias = False),
                 nn.BatchNorm2d(cm),
 
                 nn.Conv2d(cm, cm, 1, 1, 0, bias = False),
@@ -719,7 +721,8 @@ class ShuffleStage(nn.Module):
                 nn.ReLU(inplace = True),
 
                 # nn.Conv2d(cm, cm, 3, 1, 1, groups = cm, bias = False),
-                nn.Conv2d(cm, cm, 3, 1, 1, groups = 1, bias = False),
+                nn.Conv2d(cm, cm, 3, 1, 1, groups = cm, bias = False),
+                # nn.Conv2d(cm, cm, 3, 1, 1, groups = 1, bias = False),
                 nn.BatchNorm2d(cm),
 
                 nn.Conv2d(cm, cm, 1, 1, 0, bias = False),
