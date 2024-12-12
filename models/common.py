@@ -596,7 +596,7 @@ class MobileEnd(nn.Module):
         self.me = nn.Sequential(
             nn.Conv2d(c1, c2, 3, 1, 0),
             nn.BatchNorm2d(c2),
-            nn.ReLU6(inplace = True)
+            nn.ReLU(inplace = True)
         )
 
     def forward(self, x):
