@@ -18,15 +18,13 @@ backbone:
    [-1, 1, ShuffleInit, []],  # 1
 
    # bottleneck
-   [-1, 1, ShuffleBlock, [24, 48, 4, False]],
-   [-1, 1, ShuffleBlock, [48, 96, 8, False]],
-   [-1, 1, ShuffleBlock, [96, 192, 8, False]],
-   [-1, 1, ShuffleBlock, [192, 384, 8, False]],
-   [-1, 1, ShuffleBlock, [384, 768, 8, False]],
-   [-1, 1, ShuffleBlock, [768, 1536, 8, False]],
-   [-1, 1, ShuffleBlock, [1536, 3072, 4, False]],
+   [-1, 1, ShuffleBlock, [24, 48, 4, True]],
+   [-1, 1, ShuffleBlock, [48, 96, 8, True]],
+   [-1, 1, ShuffleBlock, [96, 192, 8, True]],
+   [-1, 1, ShuffleBlock, [192, 384, 8, True]],
+   [-1, 1, ShuffleBlock, [384, 768, 4, True]],
 
-   [-1, 1, ShuffleEnd, [3072, 1024, 1]],
+   [-1, 1, ShuffleEnd, [768, 1024, 1]],
   ]
 
 # elan head

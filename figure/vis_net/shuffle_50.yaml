@@ -18,9 +18,9 @@ backbone:
    [-1, 1, ShuffleInit, []],  # 1
 
    # bottleneck
-   [-1, 1, ShuffleBlock, [24, 48, 4, True]],
-   [-1, 1, ShuffleBlock, [48, 96, 8, True]],
-   [-1, 1, ShuffleBlock, [96, 192, 4, True]],
+   [-1, 1, ShuffleBlock, [24, 48, 4, False]],
+   [-1, 1, ShuffleBlock, [48, 96, 8, False]],
+   [-1, 1, ShuffleBlock, [96, 192, 4, False]],
 
    [-1, 1, ShuffleEnd, [192, 1024, 1]],
   ]
