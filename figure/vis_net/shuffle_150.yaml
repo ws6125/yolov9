@@ -1,0 +1,36 @@
+# parameters
+nc: 80  # number of classes
+depth_multiple: 1.0  # model depth multiple
+width_multiple: 1.0  # layer channel multiple
+#activation: nn.LeakyReLU(0.1)
+#activation: nn.ReLU()
+
+# anchors
+anchors: 3
+
+# elan backbone
+backbone:
+  # [from, repeats, module, args]
+  [
+   [-1, 1, Silence, []],
+
+   # conv down
+   [-1, 1, ShuffleInit, []],  # 1
+
+   # bottleneck
+   [-1, 1, ShuffleBlock, [24, 48, 4, True]],
+   [-1, 1, ShuffleBlock, [48, 96, 8, True]],
+   [-1, 1, ShuffleBlock, [96, 192, 8, True]],
+   [-1, 1, ShuffleBlock, [192, 384, 8, True]],
+   [-1, 1, ShuffleBlock, [384, 768, 8, True]],
+   [-1, 1, ShuffleBlock, [768, 1536, 8, True]],
+   [-1, 1, ShuffleBlock, [1536, 3072, 4, True]],
+
+   [-1, 1, ShuffleEnd, [3072, 1024, 1]],
+  ]
+
+# elan head
+head:
+  [
+
+  ]
