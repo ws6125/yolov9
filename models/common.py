@@ -661,7 +661,9 @@ class ShuffleInit(nn.Module):
     def __init__(self):
         super().__init__()
         self.si = nn.Sequential(
-            nn.Conv2d(3, 24, 3, 2, 1),
+            nn.Conv2d(3, 24, 3, 2, 1, bias = False),
+            nn.BatchNorm2d(24),
+            nn.ReLU(inplace = True),
             nn.MaxPool2d(kernel_size = 3, stride = 2, padding = 1)
         )
 
@@ -672,7 +674,7 @@ class ShuffleEnd(nn.Module):
     def __init__(self, c1, c2, s):
         super().__init__()
         self.se = nn.Sequential(
-            nn.Conv2d(c1, c2, 1, s, 0),
+            nn.Conv2d(c1, c2, 1, s, 0, bias = False),
             nn.BatchNorm2d(c2),
             nn.ReLU(inplace = True)
         )
@@ -688,39 +690,39 @@ class ShuffleStage(nn.Module):
 
         if down:
             self.b1 = nn.Sequential(
-                # nn.Conv2d(c1, c1, 3, 2, 1, groups = c1),
-                nn.Conv2d(c1, c1, 3, 1, 0, groups = 1),
+                # nn.Conv2d(c1, c1, 3, 2, 1, groups = c1, bias = False),
+                nn.Conv2d(c1, c1, 3, 1, 1, groups = 1, bias = False),
                 nn.BatchNorm2d(c1),
 
-                nn.Conv2d(c1, cm, 1, 1, 0),
+                nn.Conv2d(c1, cm, 1, 1, 0, bias = False),
                 nn.BatchNorm2d(cm),
                 nn.ReLU(inplace = True),
             )
 
             self.b2 = nn.Sequential(
-                nn.Conv2d(c1, cm, 1, 1, 0),
+                nn.Conv2d(c1, cm, 1, 1, 0, bias = False),
                 nn.BatchNorm2d(cm),
                 nn.ReLU(inplace = True),
 
-                # nn.Conv2d(cm, cm, 3, 2, 1, groups = cm),
-                nn.Conv2d(cm, cm, 3, 1, 0, groups = 1),
+                # nn.Conv2d(cm, cm, 3, 2, 1, groups = cm, bias = False),
+                nn.Conv2d(cm, cm, 3, 1, 1, groups = 1, bias = False),
                 nn.BatchNorm2d(cm),
 
-                nn.Conv2d(cm, cm, 1, 1, 0),
+                nn.Conv2d(cm, cm, 1, 1, 0, bias = False),
                 nn.BatchNorm2d(cm),
                 nn.ReLU(inplace = True)
             )
         else:
             self.b2 = nn.Sequential(
-                nn.Conv2d(cm, cm, 1, 1, 0),
+                nn.Conv2d(cm, cm, 1, 1, 0, bias = False),
                 nn.BatchNorm2d(cm),
                 nn.ReLU(inplace = True),
 
-                # nn.Conv2d(cm, cm, 3, 1, 1, groups = cm),
-                nn.Conv2d(cm, cm, 3, 1, 1, groups = 1),
+                # nn.Conv2d(cm, cm, 3, 1, 1, groups = cm, bias = False),
+                nn.Conv2d(cm, cm, 3, 1, 1, groups = 1, bias = False),
                 nn.BatchNorm2d(cm),
 
-                nn.Conv2d(cm, cm, 1, 1, 0),
+                nn.Conv2d(cm, cm, 1, 1, 0, bias = False),
                 nn.BatchNorm2d(cm),
                 nn.ReLU(inplace = True)
             )
