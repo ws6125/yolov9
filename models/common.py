@@ -569,7 +569,7 @@ class MobileConv(nn.Module):
     def __init__(self, c1, c2, k = 3, s = 1, p = 1, g = 1):
         super().__init__()
         self.conv = nn.Sequential(
-            nn.Conv2d(c1, c2, k, s, p, groups = g),
+            nn.Conv2d(c1, c2, k, s, p, groups = g, bias = False),
             nn.BatchNorm2d(c2),
             nn.ReLU(inplace = True),
         )
@@ -582,7 +582,7 @@ class MobileInit(nn.Module):
     def __init__(self):
         super().__init__()
         self.mi = nn.Sequential(
-            nn.Conv2d(3, 32, 3, 2, 1),
+            nn.Conv2d(3, 32, 3, 2, 1, bias = False),
             nn.ReLU(inplace = True)
         )
 
@@ -594,7 +594,7 @@ class MobileEnd(nn.Module):
     def __init__(self, c1, c2):
         super().__init__()
         self.me = nn.Sequential(
-            nn.Conv2d(c1, c2, 3, 1, 0),
+            nn.Conv2d(c1, c2, 3, 1, 0, bias = False),
             nn.BatchNorm2d(c2),
             nn.ReLU(inplace = True)
         )
@@ -604,34 +604,35 @@ class MobileEnd(nn.Module):
 
 
 class MobileIR(nn.Module):
-    def __init__(self, c1, c2, s, er):
+    def __init__(self, c1, c2, s, er, dw = True):
         super().__init__()
 
         hidden_dim = c1 * er
         self.short = (1 == s) and (c1 == c2)
+        groups = 1 if (not dw) else hidden_dim
 
         if 1 == er:
             self.mir = nn.Sequential(
-                # nn.Conv2d(hidden_dim, hidden_dim, 3, s, 1, groups = hidden_dim),
-                nn.Conv2d(hidden_dim, hidden_dim, 3, 1, 1, groups = 1),
+                # nn.Conv2d(hidden_dim, hidden_dim, 3, s, 1, groups = hidden_dim, bias = False),
+                nn.Conv2d(hidden_dim, hidden_dim, 3, 1, 1, groups = groups, bias = False),
                 nn.BatchNorm2d(hidden_dim),
                 nn.ReLU(inplace = True),
 
-                nn.Conv2d(hidden_dim, c2, 1, 1, 0),
+                nn.Conv2d(hidden_dim, c2, 1, 1, 0, bias = False),
                 nn.BatchNorm2d(c2),
             )
         else:
             self.mir = nn.Sequential(
-                nn.Conv2d(c1, hidden_dim, 1, 1, 0),
+                nn.Conv2d(c1, hidden_dim, 1, 1, 0, bias = False),
                 nn.BatchNorm2d(hidden_dim),
                 nn.ReLU(inplace = True),
 
-                # nn.Conv2d(hidden_dim, hidden_dim, 3, s, 1, groups = hidden_dim),
-                nn.Conv2d(hidden_dim, hidden_dim, 3, 1, 1, groups = 1),
+                # nn.Conv2d(hidden_dim, hidden_dim, 3, s, 1, groups = hidden_dim, bias = False),
+                nn.Conv2d(hidden_dim, hidden_dim, 3, 1, 1, groups = groups, bias = False),
                 nn.BatchNorm2d(hidden_dim),
                 nn.ReLU(inplace = True),
 
-                nn.Conv2d(hidden_dim, c2, 1, 1, 0),
+                nn.Conv2d(hidden_dim, c2, 1, 1, 0, bias = False),
                 nn.BatchNorm2d(c2),
             )
 
@@ -640,12 +641,12 @@ class MobileIR(nn.Module):
 
 
 class MobileBlock(nn.Module):
-    def __init__(self, c1, c2, t, n, s):
+    def __init__(self, c1, c2, t, n, s, dw = True):
         super().__init__()
 
         layers = []
         for i in range(n):
-            layers.append(MobileIR(c1, c2, s if (0 == i) else 1, t))
+            layers.append(MobileIR(c1, c2, s if (0 == i) else 1, t, dw))
             c1 = c2
         self.block = nn.Sequential(*layers)
 
