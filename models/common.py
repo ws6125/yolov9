@@ -688,7 +688,8 @@ class ShuffleStage(nn.Module):
 
         if down:
             self.b1 = nn.Sequential(
-                nn.Conv2d(c1, c1, 3, 2, 1, groups = c1),
+                # nn.Conv2d(c1, c1, 3, 2, 1, groups = c1),
+                nn.Conv2d(c1, c1, 3, 1, 0, groups = c1),
                 nn.BatchNorm2d(c1),
 
                 nn.Conv2d(c1, cm, 1, 1, 0),
@@ -701,7 +702,8 @@ class ShuffleStage(nn.Module):
                 nn.BatchNorm2d(cm),
                 nn.ReLU(inplace = True),
 
-                nn.Conv2d(cm, cm, 3, 2, 1, groups = cm),
+                # nn.Conv2d(cm, cm, 3, 2, 1, groups = cm),
+                nn.Conv2d(cm, cm, 3, 1, 0, groups = cm),
                 nn.BatchNorm2d(cm),
 
                 nn.Conv2d(cm, cm, 1, 1, 0),
