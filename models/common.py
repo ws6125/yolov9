@@ -683,16 +683,16 @@ class ShuffleEnd(nn.Module):
         return self.se(x)
 
 class ShuffleStage(nn.Module):
-    def __init__(self, c1, c2, down = False):
+    def __init__(self, c1, c2, dw = True, down = False):
         super().__init__()
         self.down = down
         cm = c2 // 2
 
         if down:
+            groups = 1 if (not dw) else c1
             self.b1 = nn.Sequential(
                 # nn.Conv2d(c1, c1, 3, 2, 1, groups = c1, bias = False),
-                nn.Conv2d(c1, c1, 3, 1, 1, groups = c1, bias = False),
-                # nn.Conv2d(c1, c1, 3, 1, 1, groups = 1, bias = False),
+                nn.Conv2d(c1, c1, 3, 1, 1, groups = groups, bias = False),
                 nn.BatchNorm2d(c1),
 
                 nn.Conv2d(c1, cm, 1, 1, 0, bias = False),
@@ -700,14 +700,14 @@ class ShuffleStage(nn.Module):
                 nn.ReLU(inplace = True),
             )
 
+            groups = 1 if (not dw) else cm
             self.b2 = nn.Sequential(
                 nn.Conv2d(c1, cm, 1, 1, 0, bias = False),
                 nn.BatchNorm2d(cm),
                 nn.ReLU(inplace = True),
 
                 # nn.Conv2d(cm, cm, 3, 2, 1, groups = cm, bias = False),
-                nn.Conv2d(cm, cm, 3, 1, 1, groups = cm, bias = False),
-                # nn.Conv2d(cm, cm, 3, 1, 1, groups = 1, bias = False),
+                nn.Conv2d(cm, cm, 3, 1, 1, groups = groups, bias = False),
                 nn.BatchNorm2d(cm),
 
                 nn.Conv2d(cm, cm, 1, 1, 0, bias = False),
@@ -715,14 +715,14 @@ class ShuffleStage(nn.Module):
                 nn.ReLU(inplace = True)
             )
         else:
+            groups = 1 if (not dw) else cm
             self.b2 = nn.Sequential(
                 nn.Conv2d(cm, cm, 1, 1, 0, bias = False),
                 nn.BatchNorm2d(cm),
                 nn.ReLU(inplace = True),
 
                 # nn.Conv2d(cm, cm, 3, 1, 1, groups = cm, bias = False),
-                nn.Conv2d(cm, cm, 3, 1, 1, groups = cm, bias = False),
-                # nn.Conv2d(cm, cm, 3, 1, 1, groups = 1, bias = False),
+                nn.Conv2d(cm, cm, 3, 1, 1, groups = groups, bias = False),
                 nn.BatchNorm2d(cm),
 
                 nn.Conv2d(cm, cm, 1, 1, 0, bias = False),
@@ -748,14 +748,14 @@ class ShuffleStage(nn.Module):
         return out
 
 class ShuffleBlock(nn.Module):
-    def __init__(self, c1, c2, rn):
+    def __init__(self, c1, c2, rn, dw = True):
         super().__init__()
         self.stages = []
         for i in range(rn):
             if 0 == i:
-                self.stages.append(ShuffleStage(c1, c2, True))
+                self.stages.append(ShuffleStage(c1, c2, dw, True))
             else:
-                self.stages.append(ShuffleStage(c1, c1, False))
+                self.stages.append(ShuffleStage(c1, c1, dw, False))
             c1 = c2
         self.stages = nn.Sequential(*self.stages)
 
