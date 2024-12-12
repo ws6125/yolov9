@@ -613,7 +613,7 @@ class MobileIR(nn.Module):
         if 1 == er:
             self.mir = nn.Sequential(
                 # nn.Conv2d(hidden_dim, hidden_dim, 3, s, 1, groups = hidden_dim),
-                nn.Conv2d(hidden_dim, hidden_dim, 3, 1, 1, groups = hidden_dim),
+                nn.Conv2d(hidden_dim, hidden_dim, 3, 1, 1, groups = 1),
                 nn.BatchNorm2d(hidden_dim),
                 nn.ReLU(inplace = True),
 
@@ -627,7 +627,7 @@ class MobileIR(nn.Module):
                 nn.ReLU(inplace = True),
 
                 # nn.Conv2d(hidden_dim, hidden_dim, 3, s, 1, groups = hidden_dim),
-                nn.Conv2d(hidden_dim, hidden_dim, 3, 1, 1, groups = hidden_dim),
+                nn.Conv2d(hidden_dim, hidden_dim, 3, 1, 1, groups = 1),
                 nn.BatchNorm2d(hidden_dim),
                 nn.ReLU(inplace = True),
 
@@ -689,7 +689,7 @@ class ShuffleStage(nn.Module):
         if down:
             self.b1 = nn.Sequential(
                 # nn.Conv2d(c1, c1, 3, 2, 1, groups = c1),
-                nn.Conv2d(c1, c1, 3, 1, 0, groups = c1),
+                nn.Conv2d(c1, c1, 3, 1, 0, groups = 1),
                 nn.BatchNorm2d(c1),
 
                 nn.Conv2d(c1, cm, 1, 1, 0),
@@ -703,7 +703,7 @@ class ShuffleStage(nn.Module):
                 nn.ReLU(inplace = True),
 
                 # nn.Conv2d(cm, cm, 3, 2, 1, groups = cm),
-                nn.Conv2d(cm, cm, 3, 1, 0, groups = cm),
+                nn.Conv2d(cm, cm, 3, 1, 0, groups = 1),
                 nn.BatchNorm2d(cm),
 
                 nn.Conv2d(cm, cm, 1, 1, 0),
@@ -716,7 +716,8 @@ class ShuffleStage(nn.Module):
                 nn.BatchNorm2d(cm),
                 nn.ReLU(inplace = True),
 
-                nn.Conv2d(cm, cm, 3, 1, 1, groups = cm),
+                # nn.Conv2d(cm, cm, 3, 1, 1, groups = cm),
+                nn.Conv2d(cm, cm, 3, 1, 1, groups = 1),
                 nn.BatchNorm2d(cm),
 
                 nn.Conv2d(cm, cm, 1, 1, 0),
